@@ -19,21 +19,28 @@ for col in columns_to_fix:
     # data[col].fillna(mean_value, inplace=True)  # Fill NaN with mean of the column
     data[col] = data[col].replace(np.NaN, mean_value)  # Replace NaN with the mean valueF
 
+
 # Split features (X) and target variable (y)
 X = data.iloc[:, :-1]
 y = data.iloc[:, -1]
 
+
+
 # Display correlation heatmap
-sns.heatmap(data.corr(), annot=True, cmap="YlGnBu")
-plt.show()
+# sns.heatmap(data.corr(), annot=True, cmap="YlGnBu")
+# plt.show()
+
+print(data.corr())
+
 
 # Split data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
 # Standardize the data to improve model performance
 scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
+X_train = scaler.fit_transform(X_train) 
 X_test = scaler.transform(X_test)
+
 
 # Elbow method to choose the optimal number of neighbors
 error_rate = []
@@ -44,6 +51,7 @@ for i in range(1, 21):
     knn.fit(X_train, y_train)
     y_pred = knn.predict(X_test)
     error_rate.append(np.mean(y_pred != y_test))  # Calculate error rate
+
 
 # Plotting the elbow plot
 plt.figure(figsize=(10, 6))

@@ -7,6 +7,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from kneed import KneeLocator
 
+
 # Load dataset and select only numeric columns
 df = pd.read_csv('sales_data_sample.csv', encoding='latin1')
 numeric_data = df[['QUANTITYORDERED', 'SALES']].dropna()  # Keep only necessary numeric columns and drop any NA rows
