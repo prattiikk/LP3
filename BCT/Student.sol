@@ -3,46 +3,33 @@ pragma solidity ^0.8.0;
 
 contract StudentData {
 
-    // Define a structure to represent a Student
+    // Define the structure for a student
     struct Student {
-        uint id;
         string name;
-        uint age;
-        string course;
+        uint256 rollno;
+        string class;
     }
 
-    // Create an array to store multiple students
-    Student[] public students;
+    // Create a private array to store the student data
+    Student[] private students;
 
-    // Fallback function to accept ether sent to the contract
-    // This function gets triggered when ether is sent to the contract without calling a specific function
-    fallback() external payable {
-        // Optionally, we could log an event or perform other actions when funds are received
+    // Function to add a new student to the array
+    function addStudent(string memory name, uint256 rollno, string memory class) public {
+        // Push a new student to the array
+        students.push(Student(name, rollno, class));
     }
 
-    // Function to add a new student
-    function addStudent(uint _id, string memory _name, uint _age, string memory _course) public {
-        // Add the student to the array
-        students.push(Student(_id, _name, _age, _course));
+    // Function to get a student's details by their index
+    function getStudentById(uint256 id) public view returns (string memory, uint256, string memory) {
+        // Ensure the id is valid and within bounds of the students array
+        require(id < students.length, "Student does not exist in database");
+        
+        // Return the student's details based on their index
+        return (students[id].name, students[id].rollno, students[id].class);
     }
 
-    // Function to get the total number of students
-    function getTotalStudents() public view returns (uint) {
+    // Function to get the total number of students in the database
+    function getTotalNumberOfStudents() public view returns (uint256) {
         return students.length;
-    }
-
-    // Function to retrieve student data by ID
-    function getStudentById(uint _id) public view returns (uint, string memory, uint, string memory) {
-        for (uint i = 0; i < students.length; i++) {
-            if (students[i].id == _id) {
-                return (students[i].id, students[i].name, students[i].age, students[i].course);
-            }
-        }
-        revert("Student not found");
-    }
-
-    // Function to retrieve the contract balance
-    function getBalance() public view returns (uint) {
-        return address(this).balance;
     }
 }
