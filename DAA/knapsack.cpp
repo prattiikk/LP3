@@ -32,7 +32,7 @@ int main() {
     int n, W;
     cout << "Enter the number of items: ";
     cin >> n;
-    cout << "Enter the maximum weight of the knapsack: ";
+    cout << "Enter the capacity of knapsack: ";
     cin >> W;
 
     vector<int> values(n), weights(n);
@@ -48,9 +48,9 @@ int main() {
     vector<vector<int>> dp(n + 1, vector<int>(W + 1, -1));
 
     // Call the knapsack function with the memoization table
-    int maxValue = knapsack(W, weights, values, n, dp);
+    int maxProfit = knapsack(W, weights, values, n, dp);
 
-    cout << "Maximum value in Knapsack = " << maxValue << endl;
+    cout << "Maximum value in Knapsack = " << maxProfit << endl;
 
     return 0;
 }
